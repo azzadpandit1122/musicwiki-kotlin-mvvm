@@ -15,7 +15,9 @@ import com.example.musicapp.viewmodels.MainViewModel
 
 class DashboardFragment : Fragment() {
 
-    var selectedTabs:String?=""
+    companion object{
+        var selectedTabs:String?=""
+    }
     lateinit var binding:FragmentDashboardBinding
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +65,8 @@ class DashboardFragment : Fragment() {
     private fun initOberser() {
         viewModel.getTagInfoResponse().observe(viewLifecycleOwner){
             if (it!=null){
-                Toast.makeText(activity,"Text!"+ it.album.artist?.length.toString(),Toast.LENGTH_SHORT).show();
+                binding.tvTitle.text = selectedTabs
+                binding.tvDetails.text = it.album.wiki.content
             }
         }
     }
@@ -72,7 +75,7 @@ class DashboardFragment : Fragment() {
         // init the adapter
         val adapter = TabPagerAdapter(childFragmentManager)
         // init the fragments
-        adapter.addFragment(TabFragment(), "Fantasy")
+        adapter.addFragment(TabFragment(), "Albams")
         adapter.addFragment(TabFragment(), "Romance")
         adapter.addFragment(TabFragment(), "Sci-fi")
 

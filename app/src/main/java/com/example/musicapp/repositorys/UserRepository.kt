@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.musicapp.models.TagInfoRequestModel
 import com.example.musicapp.models.TagModel
 import com.example.musicapp.models.TagRequestModel
+import com.example.musicapp.models.albamRsponse.AlbamResponse
 import com.example.musicapp.models.tagInfoRespons.TagInfoModelResponse
 import com.example.musicapp.networking.ApiRequest
 import com.example.musicapp.networking.RetroInstance
@@ -15,6 +16,7 @@ class UserRepository(private var apiCall: ApiRequest = RetroInstance.service) {
     private val TAG = UserRepository::class.java.simpleName
     var tagResult: MutableLiveData<TagModel?> = MutableLiveData()
     var tagInfoResult: MutableLiveData<TagInfoModelResponse?> = MutableLiveData()
+    var albamResponse: MutableLiveData<AlbamResponse?> = MutableLiveData()
 
     fun tagsListRequest(tag: TagRequestModel) {
         println(tag.toString())
@@ -60,5 +62,28 @@ class UserRepository(private var apiCall: ApiRequest = RetroInstance.service) {
 
     fun getTagsInfoResult(): MutableLiveData<TagInfoModelResponse?> {
         return tagInfoResult
+    }
+
+    fun setAlbamRequest(apitoken: String, option: Map<String, String>) {
+        apiCall.getAlbams(apitoken,option).enqueue(object : Callback<AlbamResponse> {
+            override fun onResponse(
+                call: Call<AlbamResponse>,
+                response: Response<AlbamResponse>
+            ) {
+                if (response.isSuccessful) {
+                    albamResponse.postValue(response.body())
+                }
+            }
+
+            override fun onFailure(call: Call<AlbamResponse>, t: Throwable) {
+                t.printStackTrace()
+                albamResponse.postValue(null)
+            }
+        })
+
+    }
+
+    fun getAlbamResult(): MutableLiveData<AlbamResponse?> {
+        return albamResponse
     }
 }

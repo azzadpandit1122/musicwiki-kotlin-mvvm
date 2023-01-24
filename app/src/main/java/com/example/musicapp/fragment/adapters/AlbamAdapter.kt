@@ -3,18 +3,23 @@ package com.example.musicapp.fragment.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.musicapp.databinding.AlbamLayoutBinding
-import com.example.musicapp.models.tagInfoRespons.Tag
+import com.example.musicapp.models.albamRsponse.Album
+import kotlinx.coroutines.withContext
 
-class AlbamAdapter( private var tagsList: ArrayList<Tag>) : RecyclerView.Adapter<AlbamAdapter.AlbamViewHolder>() {
+class AlbamAdapter( private var tagsList: List<Album>) : RecyclerView.Adapter<AlbamAdapter.AlbamViewHolder>() {
 
 
     private lateinit var binding: AlbamLayoutBinding
 
     inner class AlbamViewHolder(private val binding: AlbamLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(tabs: String) {
-//            binding.tvTitle.text =
+        fun bind(tabs: Album) {
+            binding.tvTitle.text = tabs.artist.name
+            Glide.with(binding.root)
+                .load(tabs.image[2].text) // image url
+                .into(binding.ivImage);  // imageview object
             binding.root.setOnClickListener {
 //                WF?.setOnCLikListner(tabs)
             }
@@ -30,7 +35,7 @@ class AlbamAdapter( private var tagsList: ArrayList<Tag>) : RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: AlbamViewHolder, position: Int) {
         val tabs = tagsList[position]
-        tabs.name?.let { holder.bind(it) }
+        holder.bind(tabs)
     }
 
     override fun getItemCount(): Int {

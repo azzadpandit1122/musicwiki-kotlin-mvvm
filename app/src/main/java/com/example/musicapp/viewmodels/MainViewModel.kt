@@ -6,16 +6,20 @@ import androidx.lifecycle.ViewModel
 import com.example.musicapp.models.*
 import com.example.musicapp.models.tagInfoRespons.TagInfoModelResponse
 import com.example.musicapp.models.TagRequestModel
+import com.example.musicapp.models.albamRsponse.AlbamResponse
 import com.example.musicapp.repositorys.UserRepository
+import com.google.gson.JsonObject
 
 class MainViewModel(private var userRepo: UserRepository = UserRepository()) : ViewModel() {
 
     var tagsRespose: MutableLiveData<TagModel?> = MutableLiveData()
     var tagsInfoRespose: MutableLiveData<TagInfoModelResponse?> = MutableLiveData()
+    var albamResponse: MutableLiveData<AlbamResponse?> = MutableLiveData()
 
     init {
         tagsRespose = userRepo.getTagsResult()
         tagsInfoRespose = userRepo.getTagsInfoResult()
+        albamResponse = userRepo.getAlbamResult()
     }
 
     fun setTagsRequest(tag: TagRequestModel) {
@@ -34,7 +38,13 @@ class MainViewModel(private var userRepo: UserRepository = UserRepository()) : V
         return tagsInfoRespose
     }
 
+    fun setAlbamsRequest(apitoken: String,option : Map<String,String>){
+        userRepo.setAlbamRequest(apitoken,option)
+    }
 
+    fun getAlbamResponse():LiveData<AlbamResponse?>{
+        return albamResponse
+    }
 
 
 }

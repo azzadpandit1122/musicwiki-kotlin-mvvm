@@ -4,17 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".fragment.DashboardFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/tvTitle"
+            android:maxLines="20"
+            android:gravity="center"
+            android:padding="@dimen/dp18"
+            android:textStyle="bold"
+            android:text="@string/app_name"
+            android:textColor="@color/teal_200"
+            android:textSize="@dimen/dp25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <TextView
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/tvDetails"
             android:maxLines="20"
-            android:lines="20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -43,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
 </androidx.core.widget.NestedScrollView>
