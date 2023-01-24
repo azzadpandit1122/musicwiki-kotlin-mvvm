@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MusicApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tag">Tags</string>
+    <string name="musicwiki">musicwiki</string>
+    <string name="welcome">Welcome !</string>
+    <string name="chooseAGenreToStartWith">choose a genre to start with</string>
+</resources>
