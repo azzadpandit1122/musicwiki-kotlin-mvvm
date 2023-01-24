@@ -7,6 +7,7 @@ import com.example.musicapp.models.*
 import com.example.musicapp.models.tagInfoRespons.TagInfoModelResponse
 import com.example.musicapp.models.TagRequestModel
 import com.example.musicapp.models.albamRsponse.AlbamResponse
+import com.example.musicapp.models.artistsResponse.ArtistResponse
 import com.example.musicapp.repositorys.UserRepository
 import com.google.gson.JsonObject
 
@@ -15,11 +16,13 @@ class MainViewModel(private var userRepo: UserRepository = UserRepository()) : V
     var tagsRespose: MutableLiveData<TagModel?> = MutableLiveData()
     var tagsInfoRespose: MutableLiveData<TagInfoModelResponse?> = MutableLiveData()
     var albamResponse: MutableLiveData<AlbamResponse?> = MutableLiveData()
+    var artistResponse: MutableLiveData<ArtistResponse?> = MutableLiveData()
 
     init {
         tagsRespose = userRepo.getTagsResult()
         tagsInfoRespose = userRepo.getTagsInfoResult()
         albamResponse = userRepo.getAlbamResult()
+        artistResponse = userRepo.getArtistsResult()
     }
 
     fun setTagsRequest(tag: TagRequestModel) {
@@ -44,6 +47,14 @@ class MainViewModel(private var userRepo: UserRepository = UserRepository()) : V
 
     fun getAlbamResponse():LiveData<AlbamResponse?>{
         return albamResponse
+    }
+
+    fun setArtisitRequest(apitoken: String,option : Map<String,String>){
+        userRepo.setAlbamRequest(apitoken,option)
+    }
+
+    fun getArtisitResponse():LiveData<ArtistResponse?>{
+        return artistResponse
     }
 
 

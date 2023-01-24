@@ -5,6 +5,7 @@ import com.example.musicapp.models.TagInfoRequestModel
 import com.example.musicapp.models.TagModel
 import com.example.musicapp.models.TagRequestModel
 import com.example.musicapp.models.albamRsponse.AlbamResponse
+import com.example.musicapp.models.artistsResponse.ArtistResponse
 import com.example.musicapp.models.tagInfoRespons.TagInfoModelResponse
 import com.example.musicapp.networking.ApiRequest
 import com.example.musicapp.networking.RetroInstance
@@ -17,6 +18,7 @@ class UserRepository(private var apiCall: ApiRequest = RetroInstance.service) {
     var tagResult: MutableLiveData<TagModel?> = MutableLiveData()
     var tagInfoResult: MutableLiveData<TagInfoModelResponse?> = MutableLiveData()
     var albamResponse: MutableLiveData<AlbamResponse?> = MutableLiveData()
+    var artistResponse: MutableLiveData<ArtistResponse?> = MutableLiveData()
 
     fun tagsListRequest(tag: TagRequestModel) {
         println(tag.toString())
@@ -85,5 +87,27 @@ class UserRepository(private var apiCall: ApiRequest = RetroInstance.service) {
 
     fun getAlbamResult(): MutableLiveData<AlbamResponse?> {
         return albamResponse
+    }
+    fun setArtistsRequest(apitoken: String, option: Map<String, String>) {
+        apiCall.getArtits(apitoken,option).enqueue(object : Callback<ArtistResponse> {
+            override fun onResponse(
+                call: Call<ArtistResponse>,
+                response: Response<ArtistResponse>
+            ) {
+                if (response.isSuccessful) {
+                    artistResponse.postValue(response.body())
+                }
+            }
+
+            override fun onFailure(call: Call<ArtistResponse>, t: Throwable) {
+                t.printStackTrace()
+                artistResponse.postValue(null)
+            }
+        })
+
+    }
+
+    fun getArtistsResult(): MutableLiveData<ArtistResponse?> {
+        return artistResponse
     }
 }

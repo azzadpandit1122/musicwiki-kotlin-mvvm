@@ -76,7 +76,7 @@ class DashboardFragment : Fragment() {
         val adapter = TabPagerAdapter(childFragmentManager)
         // init the fragments
         adapter.addFragment(TabFragment(), "Albams")
-        adapter.addFragment(TabFragment(), "Romance")
+        adapter.addFragment(TabFragment(), "Artist")
         adapter.addFragment(TabFragment(), "Sci-fi")
 
         // set adapter to ViewPager

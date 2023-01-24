@@ -3,6 +3,7 @@ package com.example.musicapp.networking
 import com.example.musicapp.models.tagInfoRespons.TagInfoModelResponse
 import com.example.musicapp.models.TagModel
 import com.example.musicapp.models.albamRsponse.AlbamResponse
+import com.example.musicapp.models.artistsResponse.ArtistResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -21,12 +22,17 @@ interface ApiRequest {
         @QueryMap options: Map<String,String>
     ):Call<TagInfoModelResponse>
 
-
     @GET("2.0/")
     fun getAlbams(
         @Query("api_key") api_keys: String,
         @QueryMap options: Map<String,String>
     ):Call<AlbamResponse>
+
+    @GET("2.0/")
+    fun getArtits(
+        @Query("api_key") api_keys: String,
+        @QueryMap options: Map<String,String>
+    ):Call<ArtistResponse>
 
 
 

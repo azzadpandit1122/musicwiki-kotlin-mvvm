@@ -50,6 +50,7 @@ class WelcomeFragment : Fragment() {
         initOberser()
 
     }
+    // artist
 
     private fun initOberser() {
         viewModel.getTagsListResponse().observe(viewLifecycleOwner) {
