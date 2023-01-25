@@ -39,4 +39,9 @@
         android:name="com.example.musicapp.fragment.Tab3Fragment"
         android:label="fragment_tab3"
         tools:layout="@layout/fragment_tab3" />
+    <fragment
+        android:id="@+id/artistIntoFragment"
+        android:name="com.example.musicapp.fragment.ArtistIntoFragment"
+        android:label="fragment_artist_into"
+        tools:layout="@layout/fragment_artist_into" />
 </navigation>

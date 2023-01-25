@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
@@ -51,12 +52,19 @@ class Tab2Fragment : Fragment() {
     private fun initObersver() {
         viewModel.getArtisitResponse().observe(viewLifecycleOwner) {
             if (it != null) {
-                val adapter = ArtistsAdapter(it.topartists.artist)
+                val adapter = ArtistsAdapter(it.topartists.artist,this)
                 binding.rvArtistsList.adapter = adapter
                 binding.rvArtistsList.layoutManager = GridLayoutManager(context, 2)
                 adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    fun setOnClickListner(name: String) {
+        val args = Bundle()
+        args.putString("name", name)
+        args.putString("type", "artist")
+        findNavController().navigate(R.id.artistIntoFragment,args)
     }
 
 
