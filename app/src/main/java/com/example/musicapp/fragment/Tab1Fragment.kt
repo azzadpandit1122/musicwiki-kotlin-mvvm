@@ -1,19 +1,22 @@
 package com.example.musicapp.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
 import com.example.musicapp.databinding.FragmentTab1Binding
 import com.example.musicapp.fragment.adapters.AlbamAdapter
+import com.example.musicapp.models.albamRsponse.Album
 import com.example.musicapp.viewmodels.MainViewModel
 
-class Tab1Fragment : Fragment() {
+
+class Tab1Fragment : Fragment(){
 
     private val viewModel: MainViewModel by viewModels()
     lateinit var binding: FragmentTab1Binding
@@ -50,13 +53,21 @@ class Tab1Fragment : Fragment() {
     private fun initOberver() {
         viewModel.getAlbamResponse().observe(viewLifecycleOwner) {
             if (it != null) {
-                val adapter = AlbamAdapter(it.albums.album)
+                val adapter = AlbamAdapter(it.albums.album,this)
                 binding.rvAlbamList.adapter = adapter
                 binding.rvAlbamList.layoutManager = GridLayoutManager(context, 2)
+
                 adapter.notifyDataSetChanged()
             }
         }
     }
+
+    fun setOnCLikListner(tabs: Album) {
+        val args = Bundle()
+        args.putString("name", tabs.name)
+        findNavController().navigate(R.id.albumDetailsFragment,args)
+    }
+
 
 
 }

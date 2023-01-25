@@ -1,32 +1,34 @@
 package com.example.musicapp.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import com.example.musicapp.MainActivity
 import com.example.musicapp.R
+import com.example.musicapp.databinding.FragmentAlbumDetailsBinding
+import com.example.musicapp.models.TagInfoRequestModel
+import com.example.musicapp.models.albamRsponse.Album
+import com.example.musicapp.viewmodels.MainViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AlbumDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AlbumDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    lateinit var binding: FragmentAlbumDetailsBinding
+
+    private val viewModel: MainViewModel by viewModels()
+
+    companion object{
+        var receviedAlbam :String?=null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            receviedAlbam = it.getString("name")
         }
     }
 
@@ -34,27 +36,40 @@ class AlbumDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_album_details, container, false)
+        binding = FragmentAlbumDetailsBinding.inflate(layoutInflater)
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AlbumDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AlbumDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+       /* val tag = TagInfoRequestModel()
+        tag.api_key = MainActivity.apiToken
+        tag.album = "The Bends"
+        tag.artist = "radiohead"
+        tag.format = "json"
+        tag.method = "album.getinfo"*/
+
+
+        val option : HashMap<String,String> = HashMap()
+        option["method"] = "album.search"
+        option["album"] = receviedAlbam.toString()
+        option["format"] = "json"
+
+        viewModel.setAlbamInfoRequest(MainActivity.apiToken,option)
+
+        initObeser()
     }
+
+    private fun initObeser() {
+        viewModel.getAlbamInfoResponse().observe(viewLifecycleOwner){
+            if (it!=null){
+                binding.tvTitle.text = it.results.attr.forX
+            }
+        }
+    }
+
+
 }

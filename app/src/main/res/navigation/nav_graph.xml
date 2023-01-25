@@ -24,4 +24,19 @@
         android:name="com.example.musicapp.fragment.ArtistFragment"
         android:label="fragment_artist"
         tools:layout="@layout/fragment_artist" />
+    <fragment
+        android:id="@+id/tab1Fragment"
+        android:name="com.example.musicapp.fragment.Tab1Fragment"
+        android:label="fragment_tab1"
+        tools:layout="@layout/fragment_tab1" />
+    <fragment
+        android:id="@+id/tab2Fragment"
+        android:name="com.example.musicapp.fragment.Tab2Fragment"
+        android:label="fragment_tab2"
+        tools:layout="@layout/fragment_tab2" />
+    <fragment
+        android:id="@+id/tab3Fragment"
+        android:name="com.example.musicapp.fragment.Tab3Fragment"
+        android:label="fragment_tab3"
+        tools:layout="@layout/fragment_tab3" />
 </navigation>
