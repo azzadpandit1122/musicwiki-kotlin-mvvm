@@ -4,6 +4,7 @@ import com.example.musicapp.models.tagInfoRespons.TagInfoModelResponse
 import com.example.musicapp.models.TagModel
 import com.example.musicapp.models.albamRsponse.AlbamResponse
 import com.example.musicapp.models.artistsResponse.ArtistResponse
+import com.example.musicapp.models.trackResponse.TrackResonse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -33,6 +34,12 @@ interface ApiRequest {
         @Query("api_key") api_keys: String,
         @QueryMap options: Map<String,String>
     ):Call<ArtistResponse>
+
+    @GET("2.0/")
+    fun getTracks(
+        @Query("api_key") api_keys: String,
+        @QueryMap options: Map<String,String>
+    ):Call<TrackResonse>
 
 
 

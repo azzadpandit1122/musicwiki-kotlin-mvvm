@@ -7,11 +7,13 @@ import com.example.musicapp.models.TagRequestModel
 import com.example.musicapp.models.albamRsponse.AlbamResponse
 import com.example.musicapp.models.artistsResponse.ArtistResponse
 import com.example.musicapp.models.tagInfoRespons.TagInfoModelResponse
+import com.example.musicapp.models.trackResponse.TrackResonse
 import com.example.musicapp.networking.ApiRequest
 import com.example.musicapp.networking.RetroInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.HashMap
 
 class UserRepository(private var apiCall: ApiRequest = RetroInstance.service) {
     private val TAG = UserRepository::class.java.simpleName
@@ -19,6 +21,7 @@ class UserRepository(private var apiCall: ApiRequest = RetroInstance.service) {
     var tagInfoResult: MutableLiveData<TagInfoModelResponse?> = MutableLiveData()
     var albamResponse: MutableLiveData<AlbamResponse?> = MutableLiveData()
     var artistResponse: MutableLiveData<ArtistResponse?> = MutableLiveData()
+    var trackResonse: MutableLiveData<TrackResonse?> = MutableLiveData()
 
     fun tagsListRequest(tag: TagRequestModel) {
         println(tag.toString())
@@ -109,5 +112,26 @@ class UserRepository(private var apiCall: ApiRequest = RetroInstance.service) {
 
     fun getArtistsResult(): MutableLiveData<ArtistResponse?> {
         return artistResponse
+    }
+
+    fun setTrackRequest(apiToken: String, optiontrack: HashMap<String, String>) {
+        apiCall.getTracks(apiToken,optiontrack).enqueue(object : Callback<TrackResonse> {
+            override fun onResponse(
+                call: Call<TrackResonse>,
+                response: Response<TrackResonse>
+            ) {
+                if (response.isSuccessful) {
+                    trackResonse.postValue(response.body())
+                }
+            }
+            override fun onFailure(call: Call<TrackResonse?>, t: Throwable) {
+                t.printStackTrace()
+                trackResonse.postValue(null)
+            }
+        })
+    }
+
+    fun getTrackResult(): MutableLiveData<TrackResonse?> {
+        return trackResonse
     }
 }

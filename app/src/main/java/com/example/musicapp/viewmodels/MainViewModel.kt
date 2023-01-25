@@ -8,8 +8,10 @@ import com.example.musicapp.models.tagInfoRespons.TagInfoModelResponse
 import com.example.musicapp.models.TagRequestModel
 import com.example.musicapp.models.albamRsponse.AlbamResponse
 import com.example.musicapp.models.artistsResponse.ArtistResponse
+import com.example.musicapp.models.trackResponse.TrackResonse
 import com.example.musicapp.repositorys.UserRepository
 import com.google.gson.JsonObject
+import java.util.HashMap
 
 class MainViewModel(private var userRepo: UserRepository = UserRepository()) : ViewModel() {
 
@@ -17,12 +19,14 @@ class MainViewModel(private var userRepo: UserRepository = UserRepository()) : V
     var tagsInfoRespose: MutableLiveData<TagInfoModelResponse?> = MutableLiveData()
     var albamResponse: MutableLiveData<AlbamResponse?> = MutableLiveData()
     var artistResponse: MutableLiveData<ArtistResponse?> = MutableLiveData()
+    var trackResonse: MutableLiveData<TrackResonse?> = MutableLiveData()
 
     init {
         tagsRespose = userRepo.getTagsResult()
         tagsInfoRespose = userRepo.getTagsInfoResult()
         albamResponse = userRepo.getAlbamResult()
         artistResponse = userRepo.getArtistsResult()
+        trackResonse = userRepo.getTrackResult()
     }
 
     fun setTagsRequest(tag: TagRequestModel) {
@@ -55,6 +59,14 @@ class MainViewModel(private var userRepo: UserRepository = UserRepository()) : V
 
     fun getArtisitResponse():LiveData<ArtistResponse?>{
         return artistResponse
+    }
+
+    fun setTrackRequest(apiToken: String, optiontrack: HashMap<String, String>) {
+        userRepo.setTrackRequest(apiToken,optiontrack)
+    }
+
+    fun getTrackResponse() :LiveData<TrackResonse?>{
+        return trackResonse
     }
 
 
