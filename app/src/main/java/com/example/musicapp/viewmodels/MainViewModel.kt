@@ -50,7 +50,7 @@ class MainViewModel(private var userRepo: UserRepository = UserRepository()) : V
     }
 
     fun setArtisitRequest(apitoken: String,option : Map<String,String>){
-        userRepo.setAlbamRequest(apitoken,option)
+        userRepo.setArtistsRequest(apitoken,option)
     }
 
     fun getArtisitResponse():LiveData<ArtistResponse?>{

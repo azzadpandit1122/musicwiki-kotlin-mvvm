@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,6 +13,7 @@ import com.example.musicapp.databinding.FragmentTabBinding
 import com.example.musicapp.fragment.adapters.AlbamAdapter
 import com.example.musicapp.fragment.adapters.ArtistsAdapter
 import com.example.musicapp.viewmodels.MainViewModel
+
 
 class TabFragment : Fragment() {
 
@@ -49,38 +51,81 @@ class TabFragment : Fragment() {
         optionArtis["format"] = "json"
         optionArtis["method"] = "tag.gettopartists"
 
-        if (title.equals("Albams")) {
+        Toast.makeText(getActivity(),title,Toast.LENGTH_SHORT).show();
+
+
+        if (DashboardFragment.currentPage == 0) {
+            Toast.makeText(getActivity(),"Zero",Toast.LENGTH_SHORT).show();
+
+            viewModel.setAlbamsRequest(MainActivity.apiToken, optionAlbm)
+
+            binding.rvAlbamList.visibility = View.VISIBLE
+            binding.rvTrackList.visibility = View.GONE
+            binding.rvArtistsList.visibility = View.GONE
+
+        } else if (DashboardFragment.currentPage == 1) {
+            Toast.makeText(getActivity(),"One",Toast.LENGTH_SHORT).show();
+
+            viewModel.setArtisitRequest(MainActivity.apiToken, optionArtis)
+
+            binding.rvAlbamList.visibility = View.GONE
+            binding.rvTrackList.visibility = View.GONE
+            binding.rvArtistsList.visibility = View.VISIBLE
+
+        } else if (DashboardFragment.currentPage  == 2) {
+            Toast.makeText(getActivity(),"Two" ,Toast.LENGTH_SHORT).show();
+
+            viewModel.setArtisitRequest(MainActivity.apiToken, optionArtis)
+
+            binding.rvAlbamList.visibility = View.GONE
+            binding.rvTrackList.visibility = View.VISIBLE
+            binding.rvArtistsList.visibility = View.GONE
+
+
+        } /*else {
+            viewModel.setAlbamsRequest(MainActivity.apiToken, optionAlbm)
+
+        }*/
+
+
+
+        /*if (title.equals("Albams")) {
             viewModel.setAlbamsRequest(MainActivity.apiToken, optionAlbm)
         }else if (title.equals("Artist")){
-            viewModel.setArtisitRequest(MainActivity.apiToken, optionArtis)
-        }
+          //  viewModel.setArtisitRequest(MainActivity.apiToken, optionArtis)
+        }*/
+
         initObeser()
     }
 
     private fun initObeser() {
         viewModel.getAlbamResponse().observe(viewLifecycleOwner) {
             if (it != null) {
-                if (title.equals("Albams")){
+
+                if (DashboardFragment.currentPage==0){
                     binding.rvAlbamList.visibility = View.VISIBLE
                     binding.rvTrackList.visibility = View.GONE
                     binding.rvArtistsList.visibility = View.GONE
+
+                    val adapter = AlbamAdapter(it.albums.album)
+                    binding.rvAlbamList.adapter = adapter
+                    binding.rvAlbamList.layoutManager = GridLayoutManager(context, 2)
+                    adapter.notifyDataSetChanged()
                 }
-                val adapter = AlbamAdapter(it.albums.album)
-                binding.rvAlbamList.adapter = adapter
-                binding.rvAlbamList.layoutManager = GridLayoutManager(context,2)
-                adapter.notifyDataSetChanged()
+
+
             }
         }
 
-        viewModel.getArtisitResponse().observe(viewLifecycleOwner){
-            if (it!=null){
-                if (title.equals("Artist")){
+        viewModel.getArtisitResponse().observe(viewLifecycleOwner) {
+            if (it != null) {
+                if (title.equals("Artist")) {
                     binding.rvAlbamList.visibility = View.GONE
                     binding.rvTrackList.visibility = View.GONE
                     binding.rvArtistsList.visibility = View.VISIBLE
                     val adapter = ArtistsAdapter(it.topartists.artist)
                     binding.rvArtistsList.adapter = adapter
-                    binding.rvArtistsList.layoutManager = GridLayoutManager(context,2)
+                    binding.rvArtistsList.layoutManager = GridLayoutManager(context, 2)
                     adapter.notifyDataSetChanged()
                 }
 
@@ -101,5 +146,7 @@ class TabFragment : Fragment() {
             return fragment
         }
     }*/
+
+
 
 }
