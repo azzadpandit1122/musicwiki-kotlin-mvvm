@@ -20,7 +20,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="#4F000000"
+            android:background="#5C000000"
             app:layout_constraintBottom_toBottomOf="@id/imBackground"
             app:layout_constraintEnd_toEndOf="@id/imBackground"
             app:layout_constraintStart_toStartOf="@id/imBackground"
@@ -31,8 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp18"
-            android:text="@string/app_name"
-            android:textColor="@color/black"
+            android:text="@string/noDataFound"
+            android:textColor="@color/white"
             android:textSize="@dimen/dp25"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvSubTitle"
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp80"
-            android:text="sub title "
+            android:text="No data found "
             android:textColor="@color/black"
             android:textSize="@dimen/dp25"
             app:layout_constraintBottom_toBottomOf="@id/imBackground"
@@ -62,17 +62,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tvTabs"
+            android:id="@+id/rvSabList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/imBackground" />
 
         <TextView
-            android:text="@string/appbar_scrolling_view_behavior"
+            android:text="NO Data found"
             android:layout_margin="@dimen/dp20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvTabs" />
+            app:layout_constraintTop_toBottomOf="@id/rvSabList" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

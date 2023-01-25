@@ -6,4 +6,5 @@
     <string name="musicwiki">musicwiki</string>
     <string name="welcome">Welcome !</string>
     <string name="chooseAGenreToStartWith">choose a genre to start with</string>
+    <string name="noDataFound">NO Data Found</string>
 </resources>

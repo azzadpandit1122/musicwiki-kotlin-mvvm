@@ -1,18 +1,17 @@
 package com.example.musicapp.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.musicapp.MainActivity
-import com.example.musicapp.R
 import com.example.musicapp.databinding.FragmentAlbumDetailsBinding
-import com.example.musicapp.models.TagInfoRequestModel
-import com.example.musicapp.models.albamRsponse.Album
+import com.example.musicapp.fragment.adapters.AlbamInfoAdapterAdapter
 import com.example.musicapp.viewmodels.MainViewModel
 
 class AlbumDetailsFragment : Fragment() {
@@ -52,6 +51,10 @@ class AlbumDetailsFragment : Fragment() {
         tag.format = "json"
         tag.method = "album.getinfo"*/
 
+        binding.ivakcArro.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
 
         val option : HashMap<String,String> = HashMap()
         option["method"] = "album.search"
@@ -66,7 +69,14 @@ class AlbumDetailsFragment : Fragment() {
     private fun initObeser() {
         viewModel.getAlbamInfoResponse().observe(viewLifecycleOwner){
             if (it!=null){
+                Glide.with(binding.root)
+                    .load(it.results.albummatches.album[0].image.get(2).text) // image url
+                    .into(binding.imBackground);
                 binding.tvTitle.text = it.results.attr.forX
+                val adapter = AlbamInfoAdapterAdapter(it.results.albummatches.album)
+                binding.rvSabList.adapter = adapter
+                binding.rvSabList.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+                adapter.notifyDataSetChanged()
             }
         }
     }
